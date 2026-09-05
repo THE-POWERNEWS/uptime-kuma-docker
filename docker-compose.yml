@@ -1,7 +1,18 @@
-version: "3"
+# Uptime Kuma
+#
+# ⚠ **タグは固定する。**上流は `latest` を v1 に据え置いたままなので、`:latest` を
+#   指していると「pull しているのに 10 か月版が動かない」状態になる（実際になった）。
+#   逆に `:2` のような動くタグにすると、宣言を変えていないのにマイナーが上がる。
+#   **版を上げるのは、このファイルの変更として行う。**
+#
+# ⚠⚠ **v1 → v2 の初回起動は SQLite の自動マイグレーションを走らせる。中断は厳禁**
+#   （中断したらバックアップから戻してやり直し）。**ダウングレード手順は無い。**
+#   移行中は監視が止まる（Web UI は進捗ページを返す）。
+#
+# ⚠ `rootless` イメージは使わない（v1 からの移行で問題が出ると上流が明記している）。
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:latest
+    image: louislam/uptime-kuma:2.5.3
     container_name: uptime-kuma
     restart: always
     ports:
